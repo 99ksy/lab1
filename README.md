@@ -14,7 +14,7 @@ HTTP-запрос отправлен. Ожидание ответа… 200 OK
 2) Разархивируйте скаченный файл в директорию `~/boost_1_69_0`
 ```bash
 ksy99@MacBook-Air-Ksenia ~ % tar -xvf boost_1_69_0.tar.gz.1
-$ ksy99@MacBook-Air-Ksenia Desktop % cd /Users/ksy99/Desktop/boost_1_69_0
+ksy99@MacBook-Air-Ksenia Desktop % cd /Users/ksy99/Desktop/boost_1_69_0
 ```
 3) Подсчитайте количество файлов в директории `~/boost_1_69_0` **не включая** вложенные директории.
 ```bash

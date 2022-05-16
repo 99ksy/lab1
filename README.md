@@ -18,46 +18,37 @@ $ ksy99@MacBook-Air-Ksenia Desktop % cd /Users/ksy99/Desktop/boost_1_69_0
 ```
 3) Подсчитайте количество файлов в директории `~/boost_1_69_0` **не включая** вложенные директории.
 ```bash
-ls -l | grep "^-" | wc
-find . -maxdepth 1 -type f | wc
-tree -L 1
-До компиляции: 12
-После компиляции: 16
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find . -maxdepth 1 -type f | wc -l
+До компиляции: 13
 ```
 4) Подсчитайте количество файлов в директории `~/boost_1_69_0` **включая** вложенные директории.
 ```bash
-ls -laR | grep "^-" | wc
-find ! -type d | wc
-tree
-До компиляции: 61191
-После компиляции: 62081
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find . -type f|wc -l
 ```
+61198
+
 5) Подсчитайте количество заголовочных файлов, файлов с расширением `.cpp`, сколько остальных файлов (не заголовочных и не `.cpp`).
 ```bash
 Заголовочных:
-	$ find . -iname "*.h" | wc -l
-	$ tree -P *.h
-	До компиляции: 296
-	После компиляции: 296
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find . -iname "*.h" | wc -l
+ 296
+
 
 Файлов с расширением ".cpp":
-    $ find . -iname "*.cpp" | wc -l
-	$ tree -P *.cpp
-	До компиляции:13774
-	После компиляции:13789
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find . -iname "*.cpp" | wc -l
+13774
+
 
 Остальные файлы:
-    find -type f ! -iname "*.h" -a ! -iname "*.cpp" | wc -l
-	find -type f ! -name "*.h" -a ! -name "*.cpp" | wc -l
-	До компиляции: 47121
-	После компиляции:47996
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find -type f ! -iname "*.h" -a ! -iname "*.cpp" | wc -l
+47121
 ```
 
 
 
 6) Найдите полный пусть до файла `any.hpp` внутри библиотеки *boost*.
 ```bash
-$ find -iname "any.hpp"
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find -name “any.hpp” -print 
 ./boost/type_erasure/any.hpp
 ./boost/any.hpp
 ./boost/xpressive/detail/utility/any.hpp
@@ -72,25 +63,30 @@ $ find -iname "any.hpp"
 
 7) Выведите в консоль все файлы, где упоминается последовательность `boost::asio`.
 ```bash
-grep -lr "bogreost::asio"
-Выводит много файлов
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % grep -Ril "boost::asio" .
+./boost/beast/experimental/core/impl/timeout_socket.hpp
+./boost/beast/experimental/core/impl/flat_stream.ipp
+./boost/beast/experimental/core/impl/timeout_service.ipp
+./boost/beast/experimental/core/flat_stream.hpp
+./boost/beast/experimental/core/ssl_stream.hpp
+./boost/beast/experimental/core/timeout_service.hpp
+./boost/beast/experimental/core/timeout_socket.hpp
 ```
 
 8) Скомпилирутйе *boost*. Можно воспользоваться [инструкцией](https://www.boost.org/doc/libs/1_61_0/more/getting_started/unix-variants.html#or-build-custom-binaries) или [ссылкой](https://codeyarns.com/2017/01/24/how-to-build-boost-on-linux/).
 ```bash
-./bootstrap.sh
-./b2 install
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % ./bootstrap.sh –prefix=boost_output
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % ./b2 install
 ```
 
 9) Перенесите все скомпилированные на предыдущем шаге статические библиотеки в директорию `~/boost-libs`.
 ```bash
-$ mkdir ~/boost-libs
-$ mv ~/boost_1_69_0/stage/lib/*.a ~/boost-libs
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % cd ~/boost-libs
+
 ```
 10) Подсчитайте сколько занимает дискового пространства каждый файл в этой директории.
 ```bash
-$ du -ah 
-$ ls -lsh | sort -hr
+ksy99@MacBook-Air-Ksenia boost_1_69_0 % find . type -f -exec du -h {} +|sort -rh | head -n 10
 152K	./libboost_date_time.a
 3,1M	./libboost_math_tr1l.a
 468K	./libboost_thread.a
@@ -103,45 +99,19 @@ $ ls -lsh | sort -hr
 232K	./libboost_prg_exec_monitor.a
 3,1M	./libboost_math_tr1f.a
 620K	./libboost_math_c99.a
-360K	./libboost_contract.a
-3,1M	./libboost_math_tr1.a
-4,0K	./libboost_atomic.a
-24K	./libboost_stacktrace_backtrace.a
-4,0K	./libboost_stacktrace_noop.a
-20K	./libboost_context.a
-4,7M	./libboost_wave.a
-4,0K	./libboost_system.a
-516K	./libboost_math_c99f.a
-2,1M	./libboost_locale.a
-176K	./libboost_iostreams.a
-196K	./libboost_coroutine.a
-56K	./libboost_timer.a
-2,7M	./libboost_log_setup.a
-24K	./libboost_stacktrace_addr2line.a
-904K	./libboost_graph.a
-4,0K	./libboost_exception.a
-424K	./libboost_filesystem.a
-2,4M	./libboost_unit_test_framework.a
-2,4M	./libboost_test_exec_monitor.a
-188K	./libboost_type_erasure.a
-244K	./libboost_chrono.a
-552K	./libboost_math_c99l.a
-4,5M	./libboost_log.a
-792K	./libboost_wserialization.a
-156K	./libboost_container.a
-40M	.
+
 ```
 11) Найдите *топ10* самых "тяжёлых".
 ```bash
-$ ls -lsh | sort -hr | head
-4,7M -rw-rw-r-- 1 lis lis 4,7M мар 17 20:33 libboost_wave.a
-4,5M -rw-rw-r-- 1 lis lis 4,5M мар 17 20:33 libboost_log.a
-3,1M -rw-rw-r-- 1 lis lis 3,1M мар 17 20:33 libboost_math_tr1l.a
-3,1M -rw-rw-r-- 1 lis lis 3,1M мар 17 20:33 libboost_math_tr1f.a
-3,1M -rw-rw-r-- 1 lis lis 3,1M мар 17 20:33 libboost_math_tr1.a
-2,8M -rw-rw-r-- 1 lis lis 2,8M мар 17 20:33 libboost_regex.a
-2,7M -rw-rw-r-- 1 lis lis 2,7M мар 17 20:33 libboost_log_setup.a
-2,4M -rw-rw-r-- 1 lis lis 2,4M мар 17 20:33 libboost_unit_test_framework.a
-2,4M -rw-rw-r-- 1 lis lis 2,4M мар 17 20:33 libboost_test_exec_monitor.a
-2,1M -rw-rw-r-- 1 lis lis 2,1M мар 17 20:33 libboost_locale.a
+ksy99@MacBook-Air-Ksenia boost_1_69_0 %  ls -lsh | sort -hr | head
+28M ./libboost_wave.a
+21M ./libboost_log_setup.a
+20M ./libboost_log.a
+16M ./libboost_test_exec_monitor.a
+15M ./libboost_unit_test_framework.a
+9,1M ./libboost_locale.a
+8,9M ./libboost_regex.a
+8,1M ./libboost_math_tr1f.a
+7,8M ./libboost_math_tr1.a
+7,7M ./libboost_math_tr1l.a
 ```

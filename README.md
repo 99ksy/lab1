@@ -5,6 +5,12 @@
 ```bash
 $ wget https://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz
 ```
+Распознаётся altushost-swe.dl.sourceforge.net (altushost-swe.dl.sourceforge.net)… 79.142.76.130
+Подключение к altushost-swe.dl.sourceforge.net (altushost-swe.dl.sourceforge.net)|79.142.76.130|:443... соединение установлено.
+HTTP-запрос отправлен. Ожидание ответа… 200 OK
+Длина: 111710205 (107M) [application/x-gzip]
+Сохранение в: «boost_1_69_0.tar.gz.1»
+
 2) Разархивируйте скаченный файл в директорию `~/boost_1_69_0`
 ```bash
 $ tar -xf boost_1_69_0.tar.gz -C ~
